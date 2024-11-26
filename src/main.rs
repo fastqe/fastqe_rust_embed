@@ -1,24 +1,26 @@
 
-
-use wasmer::{Instance, Module, Store};
+use wasmer::{Instance, Module, Store, imports};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // Access the embedded WASM
-    let wasm_bytes = include_bytes!("simple.wasm");
+    let wasm_bytes = include_bytes!("embedded_module.wasm");
 
-    // Create a new Wasmer store
+    // Create a store for static execution
     let store = Store::default();
 
     // Compile the WASM module
     let module = Module::new(&store, wasm_bytes)?;
 
-    // Instantiate the module
-    let instance = Instance::new(&module, &[])?;
+    // Create an import object
+    let import_object = imports! {};
 
-    // Call an exported function (e.g., "main")
+    // Instantiate the module
+    let instance = Instance::new(&module, &import_object)?;
+
+    // Call the "main" function
     if let Ok(func) = instance.exports.get_function("main") {
         func.call(&[])?;
     }
 
     Ok(())
 }
+
