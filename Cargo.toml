@@ -21,7 +21,7 @@ js-sys = "*"
 emojis = "0.6.1"
 clap = "4.4.10"
 flate2 = "1.0"
-wasmer = "*"
+wasmer = { version = "3.2", features = ["static"], default-features = false }
 
 [dependencies.web-sys]
 version = "0.3.4"
