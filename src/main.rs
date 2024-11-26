@@ -1,31 +1,23 @@
-use wasmtime::*;
 
-// Embed the local WASM file
-const EMBEDDED_WASM: &[u8] = include_bytes!("embedded_module.wasm");
 
-// Function to access the embedded WASM
-pub fn get_embedded_wasm() -> &'static [u8] {
-    EMBEDDED_WASM
-}
-
+use wasmer::{Instance, Module, Store};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Access the embedded WASM
-    let wasm_bytes = get_embedded_wasm();
+    let wasm_bytes = include_bytes!("simple.wasm");
 
-    // Initialize the Wasmtime engine and module
-    let engine = Engine::default();
-    let module = Module::new(&engine, wasm_bytes)?;
+    // Create a new Wasmer store
+    let store = Store::default();
 
-    // Create a new Store
-    let mut store = Store::new(&engine, ());
+    // Compile the WASM module
+    let module = Module::new(&store, wasm_bytes)?;
 
     // Instantiate the module
-    let instance = Instance::new(&mut store, &module, &[])?;
+    let instance = Instance::new(&module, &[])?;
 
-    // Call a function exported by the WASM module (if any)
-    if let Some(func) = instance.get_typed_func::<(), ()>(&mut store, "main").ok() {
-        func.call(&mut store, ())?;
+    // Call an exported function (e.g., "main")
+    if let Ok(func) = instance.exports.get_function("main") {
+        func.call(&[])?;
     }
 
     Ok(())
