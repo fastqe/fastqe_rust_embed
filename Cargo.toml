@@ -2,7 +2,7 @@
 name = "fastqe"
 version = "0.1.0"
 authors = ["Andrew Lonsdale <andrew.lonsdale@lonsbio.com.au>"]
-
+edition = "2021"
 
 [lib]
 crate-type = ["cdylib","lib"]
@@ -21,7 +21,7 @@ js-sys = "*"
 emojis = "0.6.1"
 clap = "4.4.10"
 flate2 = "1.0"
-rustpython-vm = { path = "../../vm", default-features = false }
+rustpython-vm = { default-features = false }
 
 
 
