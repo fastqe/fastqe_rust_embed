@@ -1,26 +1,15 @@
+use rustpython_vm as vm;
 
-use wasmer::{Instance, Module, Store, imports};
+fn main() -> vm::PyResult<()> {
+    vm::Interpreter::without_stdlib(Default::default()).enter(|vm| {
+        let scope = vm.new_scope_with_builtins();
+        let source = r#"print("Hello World!")"#;
+        let code_obj = vm
+            .compile(source, vm::compiler::Mode::Exec, "<embedded>".to_owned())
+            .map_err(|err| vm.new_syntax_error(&err, Some(source)))?;
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let wasm_bytes = include_bytes!("embedded_module.wasm");
+        vm.run_code_obj(code_obj, scope)?;
 
-    // Create a store for static execution
-    let store = Store::default();
-
-    // Compile the WASM module
-    let module = Module::new(&store, wasm_bytes)?;
-
-    // Create an import object
-    let import_object = imports! {};
-
-    // Instantiate the module
-    let instance = Instance::new(&module, &import_object)?;
-
-    // Call the "main" function
-    if let Ok(func) = instance.exports.get_function("main") {
-        func.call(&[])?;
-    }
-
-    Ok(())
+        Ok(())
+    })
 }
-
