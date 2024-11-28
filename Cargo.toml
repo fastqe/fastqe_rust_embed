@@ -21,7 +21,7 @@ js-sys = "*"
 emojis = "0.6.1"
 clap = "4.4.10"
 flate2 = "1.0"
-rustpython-vm = { default-features = false }
+rustpython-vm = { version = "*", default-features = false }
 
 
 
