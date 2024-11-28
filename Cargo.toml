@@ -21,7 +21,9 @@ js-sys = "*"
 emojis = "0.6.1"
 clap = "4.4.10"
 flate2 = "1.0"
-rustpython-vm ="*"
+rustpython-vm = { path = "../../vm", default-features = false }
+
+
 
 [dependencies.web-sys]
 version = "0.3.4"
