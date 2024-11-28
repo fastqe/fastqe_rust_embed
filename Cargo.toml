@@ -28,7 +28,7 @@ js-sys = "*"
 emojis = "0.6.1"
 clap = "4.4.10"
 flate2 = "1.0"
-rustpython-vm = { version = "*", default-features = false ,workspace = true, features = ["compiler", "encodings", "serde", "wasmbind"]  }
+rustpython-vm = { git = "https://github.com/RustPython/RustPython.git", version = "*", default-features = false ,workspace = true, features = ["compiler", "encodings", "serde", "wasmbind"]  }
 rustpython-common = { workspace = true }
 rustpython-pylib = { workspace = true, optional = true }
 rustpython-stdlib = { workspace = true, default-features = false, optional = true }
