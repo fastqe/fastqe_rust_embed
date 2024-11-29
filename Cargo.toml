@@ -29,13 +29,13 @@ emojis = "0.6.1"
 clap = "4.4.10"
 flate2 = "1.0"
 rustpython-vm = { git = "https://github.com/RustPython/RustPython.git", version = "*", default-features = false ,workspace = true, features = ["compiler", "encodings", "serde", "wasmbind"]  }
-#rustpython-common = { workspace = true }
-rustpython-pylib = { workspace = true, optional = true }
-rustpython-stdlib = { workspace = true, default-features = false, optional = true }
+rustpython-common = {version = "*", workspace = true }
+rustpython-pylib = { version = "*",workspace = true, optional = true }
+rustpython-stdlib = { version = "*",workspace = true, default-features = false, optional = true }
 # make sure no threading! otherwise wasm build will fail
-rustpython-parser = { workspace = true }
+rustpython-parser = { version = "0.4.0", workspace = true }
 
-serde = { workspace = true }
+serde = { version = "*",workspace = true }
 
 console_error_panic_hook = "0.1"
 serde-wasm-bindgen = "0.3.1"
