@@ -25,6 +25,33 @@ jobs:
     - uses: actions/checkout@v3
     - name: Verify ls 
       run: ls -R 
+    - uses: actions/checkout@v4
+    - uses: dtolnay/rust-toolchain@stable
+
+    - uses: Swatinem/rust-cache@v2
+    - name: install wasm-pack
+      run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+    - name: install geckodriver
+      run: |
+        wget https://github.com/mozilla/geckodriver/releases/download/v0.34.0/geckodriver-v0.34.0-linux64.tar.gz
+        mkdir geckodriver
+        tar -xzf geckodriver-v0.34.0-linux64.tar.gz -C geckodriver
+    - uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    - run: python -m pip install -r requirements.txt
+      working-directory: ./wasm/tests
+    - uses: actions/setup-node@v4
+    - name: run test
+      run: |
+        export PATH=$PATH:`pwd`/../../geckodriver
+        npm install
+        npm run test
+      env:
+        NODE_OPTIONS: "--openssl-legacy-provider"
+      working-directory: ./wasm/demo
+    - uses: mwilliamson/setup-wabt-action@v3
+      with: { wabt-version: "1.0.30" }
     - name: Build
       run: cargo build --verbose --target wasm32-unknown-emscripten --release
       
