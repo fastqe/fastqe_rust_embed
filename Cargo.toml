@@ -4,7 +4,7 @@ description = "A Python-3 (CPython >= 3.5.0) Interpreter written in Rust, compil
 
 [lib]
 crate-type = ["cdylib", "rlib"]
-path = src/lib.rs"
+path = "src/lib.rs"
 link-args = ["-s", "ZLIB=1"]
 
 
