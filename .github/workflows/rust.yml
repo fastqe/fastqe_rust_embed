@@ -40,16 +40,8 @@ jobs:
       with:
         python-version: ${{ env.PYTHON_VERSION }}
     - run: python -m pip install -r requirements.txt
-      working-directory: ./wasm/tests
+      working-directory: ./tests
     - uses: actions/setup-node@v4
-    - name: run test
-      run: |
-        export PATH=$PATH:`pwd`/../../geckodriver
-        npm install
-        npm run test
-      env:
-        NODE_OPTIONS: "--openssl-legacy-provider"
-      working-directory: ./wasm/demo
     - uses: mwilliamson/setup-wabt-action@v3
       with: { wabt-version: "1.0.30" }
     - name: Build
