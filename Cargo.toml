@@ -17,7 +17,7 @@ rustpython-stdlib = { version = "*", default-features = false, optional = true }
 # make sure no threading! otherwise wasm build will fail
 rustpython-vm = { version = "*",features = ["compiler", "encodings", "serde", "wasmbind"] }
 
-rustpython-parser = version = "*"
+rustpython-parser = "*"
 serde = { version = "1.0.133", default-features = false }
 wasm-bindgen = "0.2.92"
 
